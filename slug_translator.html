@@ -1,0 +1,313 @@
+<html>
+    <head>
+        <title>슬러그 번역기</title>
+        <style>
+            .select-mode {
+                width: 80px;
+                height: 60px;
+            }
+            .select-mode .selected {
+                background: #0a0;
+            }
+            .select-mode img {
+                height: 40px;
+            }
+            textarea {
+                width: 80%;
+                height: 30%;
+            }
+            #errormsg {
+                color: #f00;
+            }
+        </style>
+    </head>
+    <body>
+        <p><textarea id="orig"></textarea></p>
+        <p>
+        <button class="select-mode" id="slug"><img src="data:image/webp;base64,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" alt="" /></button>
+        <button class="select-mode" id="shell"><img src="data:image/webp;base64,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" alt="" /></button>
+        </p>
+        <p>
+            셸 늘여쓰기 최소 <input id="shellmin" type="number" min="0" value="2"><br>
+            셸 늘여쓰기 최대 <input id="shellmax" type="number" min="0" value="2">
+        </p>
+        <p><textarea id="trans" readonly></textarea></p>
+        <p><div id="errormsg"></div></p>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            (() => {
+                const stringToCodepoints = (text) => Array.from(text).map((c) => c.codePointAt(0));
+
+                const codepointsToString = (codepoints) => String.fromCodePoint(...codepoints);
+
+                const decomposeHangul = (codepoint) => {
+                    if (!(codepoint >= 0xAC00 && codepoint < 0xAC00 + 11172)) {
+                        return undefined;
+                    }
+
+                    codepoint = codepoint - 0xAC00;
+                    const 종성 = codepoint % 28;
+                    codepoint = (codepoint - 종성) / 28;
+                    const 중성 = codepoint % 21;
+                    codepoint = (codepoint - 중성) / 21;
+                    const 초성 = codepoint;
+                    return [초성, 중성, 종성];
+                }
+                
+                const composeHangul = (초성, 중성, 종성) => {
+                    return 초성 * 21 * 28 + 중성 * 28 + 종성 + 0xAC00;
+                }
+
+                const translateSlug = (text) => {
+                    const slugExtend종성 = (종성) => {
+                        // Extend ㅅ/ㅈ 종성 to next ㅇ 초성. Return [converted종성, next초성].
+
+                        // Example: 뱃삯은 -> 뱃싹쓴
+                        switch(종성) {
+                            case 3: return [1, 10]; // ㄳ -> ㄱ, ㅆ
+                            case 12: return [8, 10]; // ㄽ -> ㄹ, ㅆ
+                            case 18: return [17, 10]; // ㅄ -> ㅂ, ㅆ
+                            case 19: return [0, 10]; // ㅅ -> none, ㅆ
+                            case 20: return [0, 10]; // ㅆ -> none, ㅆ
+                            case 5: return [4, 13] // ㄵ -> ㄴ, ㅉ
+                            case 22: return [0, 13] // ㅈ -> none, ㅉ
+                            default: return undefined;
+                        }
+                    };
+
+
+                    const oldCodepoints = stringToCodepoints(text);
+                    const newCodepoints = [];
+                    oldCodepoints.forEach((codepoint, idx) => {
+                        const analyzed = decomposeHangul(codepoint);
+                        if (analyzed === undefined) {
+                            newCodepoints.push(codepoint);
+                            return;
+                        }
+
+                        var [초성, 중성, 종성] = analyzed;
+
+                        // 초성
+                        // ㅅ and ㅈ: convert to ㅆ and ㅉ repectively. 
+                        // ㅇ: take previous 종성 in a converted form if ㅇ.
+                        if (초성 === 9) { // ㅅ
+                            초성 = 10; // ㅆ
+                        } else if (초성 === 12) { // ㅈ
+                            초성 = 13; // ㅉ
+                        }
+                        else if (초성 === 11) { // ㅇ
+                            if (idx !== 0) {
+                                const analyzedPrev = decomposeHangul(oldCodepoints[idx - 1]);
+                                if (analyzedPrev !== undefined) {
+                                    const [, , 종성Prev] = analyzedPrev;
+                                    const extendPrev = slugExtend종성(종성Prev);
+                                    if (extendPrev !== undefined) {
+                                        const [, next초성] = extendPrev;
+                                        초성 = next초성;
+                                    }
+                                }
+                            }
+                        }
+
+                        // 종성
+                        // Convert according to slugExtend종성 rules if followed by
+                        // ㅇ, ㅅ, ㅆ, ㅈ, ㅉ on the next 초성.
+                        if (idx < oldCodepoints.length - 1) {
+                            const analyzedNext = decomposeHangul(oldCodepoints[idx + 1]);
+                            if (analyzedNext !== undefined) {
+                                const [초성Next, , ] = analyzedNext;
+                                if (초성Next >= 9 && 초성Next <= 13) { // 9 10 11 12 13: ㅅ ㅆ ㅇ ㅈ ㅉ
+                                    const extend = slugExtend종성(종성);
+                                    if (extend !== undefined) {
+                                        const [converted종성,] = extend;
+                                        종성 = converted종성;
+                                    }
+                                }
+                            }
+                        }
+
+                        newCodepoints.push(composeHangul(초성, 중성, 종성));
+                    });
+                    return codepointsToString(newCodepoints);
+                };
+
+                const translateShell = (text, shellmin, shellmax) => {
+                    if (shellmin > shellmax) {
+                        const t = shellmin;
+                        shellmin = shellmax;
+                        shellmax = t;
+                    }
+
+                    const oldCodepoints = stringToCodepoints(text);
+                    const step1Codepoints = [];
+                    var step2Codepoints = [];
+
+                    // Unlike slugs, shells do change the length of the string.
+                    // We'll approach in two-step conversion.
+
+                    // Step 1: Extend 종성 to the next character (했어요 -> 해써요)
+                    oldCodepoints.forEach((codepoint, idx) => {
+                        const shellExtend종성 = (종성, 초성Next) => {
+                            switch(종성 * 1000 + 초성Next) {
+                                // ㄳ, ㄽ, ㅄ -> ㅇ: ㄱ, ㄹ, ㅂ -> ㅅ (뱃삯이 => 뱃삭시)
+                                case 3011: return [1, 9];
+                                case 12011: return [8, 9];
+                                case 18011: return [17, 9];
+
+                                // ㄳ, ㄽ, ㅄ -> ㅅ, ㅆ: ㄱ, ㄹ, ㅂ -> ㅆ (넋살이 -> 넉쌀이)
+                                case 3009: case 3010: return [1, 10];
+                                case 12009: case 12010: return [8, 10];
+                                case 18009: case 18010: return [17, 10];
+
+                                // ㅅ -> ㅇ: None -> ㅅ (옷을 -> 오슬)
+                                case 19011: return [0, 9];
+
+                                // ㅆ -> ㅇ: None -> ㅆ (했어 -> 해써)
+                                case 20011: return [0, 10];
+
+                                // ㅅ -> ㅅ: None -> ㅆ (덧신 -> 더씬)
+                                case 19009: return [0, 10];
+
+                                // ㅆ -> ㅅ: None -> ㅆ (했소 -> 해쏘)
+                                case 20009: return [0, 10];
+
+                                // Leave ㅅ, ㅆ -> ㅆ case.
+
+                                default: return undefined;
+                            }
+                        };
+
+                        const analyzed = decomposeHangul(codepoint);
+                        if (analyzed === undefined) {
+                            step1Codepoints.push(codepoint);
+                            return;
+                        }
+
+                        var [초성, 중성, 종성] = analyzed;
+
+                        // 초성
+                        if (idx !== 0) {
+                            const analyzedPrev = decomposeHangul(oldCodepoints[idx - 1]);
+                            if (analyzedPrev !== undefined) {
+                                const [, , 종성Prev] = analyzedPrev;
+                                const extendPrev = shellExtend종성(종성Prev, 초성);
+                                if (extendPrev !== undefined) {
+                                    const [, next초성] = extendPrev;
+                                    초성 = next초성;
+                                }
+                            }
+                        }
+
+                        // 종성
+                        if (idx < oldCodepoints.length - 1) {
+                            const analyzedNext = decomposeHangul(oldCodepoints[idx + 1]);
+                            if (analyzedNext !== undefined) {
+                                const [초성Next, , ] = analyzedNext;
+                                const extend = shellExtend종성(종성, 초성Next);
+                                if (extend !== undefined) {
+                                    const [converted종성,] = extend;
+                                    종성 = converted종성;
+                                }
+                            }
+                        }
+
+                        step1Codepoints.push(composeHangul(초성, 중성, 종성));
+                    });
+
+                    // Step 2: Stretch characters with ㅅ and ㅆ 초성 (햇서요 -> 햇서어어어요)
+                    step1Codepoints.forEach((codepoint, idx) => {
+                        const decompose중성 = (중성) => {
+                            // Return first, intermediate and last 중성 after stretching
+                            // Example: 쇠를 -> 소오오외를 (returns [ㅗ, ㅗ, ㅚ])
+                            // Example: 쇼를 -> 쇼오오오를 (returns [ㅛ, ㅗ, ㅗ])
+                            switch(중성) {
+                                // ㅏ, ㅓ, ㅗ, ㅜ, ㅡ, ㅣ, ㅐ, ㅔ: return as-is
+                                case 0: case 4: case 8: case 13: case 18: case 20: case 1: case 5:
+                                    return [중성, 중성, 중성];
+                                // 샤 -> 샤아아, 셔 -> 셔어어
+                                // 쇼 -> 쇼오오, 슈 -> 슈우우
+                                // 섀 -> 섀애애, 셰 -> 셰에에
+                                case 2: return [중성, 0, 0];
+                                case 6: return [중성, 4, 4];
+                                case 12: return [중성, 8, 8];
+                                case 17: return [중성, 13, 13];
+                                case 3: return [중성, 1, 1];
+                                case 7: return [중성, 5, 5];
+
+                                // 솨 -> 소오와, 쇄 -> 소오왜
+                                // 쇠 -> 소오외, 숴 -> 수우워
+                                // 쉐 -> 수우웨, 쉬 -> 수우위
+                                // 싀 -> 스으의
+                                case 9: return [8, 8, 중성];
+                                case 10: return [8, 8, 중성];
+                                case 11: return [8, 8, 중성];
+                                case 14: return [13, 13, 중성];
+                                case 15: return [13, 13, 중성];
+                                case 16: return [13, 13, 중성];
+                                case 19: return [18, 18, 중성];
+                                
+                                default: return undefined;
+                            }
+                        };
+
+                        const analyzed = decomposeHangul(codepoint);
+                        if (analyzed === undefined) {
+                            step2Codepoints.push(codepoint);
+                            return;
+                        }
+
+                        const [초성, 중성, 종성] = analyzed;
+                        const alternativeSequence = (() => {
+                            if (초성 !== 9 && 초성 !== 10) return undefined;
+
+                            const decomposed중성 = decompose중성(중성);
+                            if (decomposed중성 === undefined) return undefined;
+
+                            const [start, mid, end] = decomposed중성;
+
+                            const stretchAmount = Math.floor(Math.random() * (shellmax - shellmin + 1)) + shellmin
+                            return [
+                                composeHangul(초성, start, 0),
+                                ...Array(stretchAmount - 1).fill(composeHangul(11, mid, 0)),
+                                composeHangul(11, end, 종성)
+                            ]
+                        })();
+
+                        if (alternativeSequence !== undefined) {
+                            step2Codepoints = [...step2Codepoints, ...alternativeSequence];
+                        } else {
+                            step2Codepoints.push(codepoint);
+                        }
+                    });
+
+                    return codepointsToString(step2Codepoints);
+                };
+
+                $("#slug").on("click", () => {
+                    try {
+                        $("#errormsg").text("");
+                        $("#trans").val(translateSlug($("#orig").val()))
+                    } catch(e) {
+                        $("#errormsg").val(e.message);
+                        throw e;
+                    }
+                });
+
+                $("#shell").on("click", () => {
+                    try {
+                        $("#errormsg").text("");
+                        $("#trans").val(translateShell(
+                            $("#orig").val(),
+                            parseInt($("#shellmin").val()),
+                            parseInt($("#shellmax").val())
+                        ))
+                    } catch(e) {
+                        $("#errormsg").text(e.message);
+                        throw e;
+                    }
+                });
+            })();
+        </script>
+    </body>
+</html>
